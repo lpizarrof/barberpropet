@@ -207,33 +207,69 @@ footer p+p{margin-top:.3rem}
 .fade-in.visible{opacity:1;transform:none}
 
 /* RESPONSIVE */
-@media(max-width:920px){
-  .hero-left{width:100%;background:linear-gradient(to bottom,rgba(16,12,9,.9) 0%,rgba(16,12,9,.75) 70%,transparent 100%);padding:6rem 1.75rem 3rem}
-  h1.hero-name{font-size:2.8rem}
-  .post-card{grid-template-columns:1fr}
-  .post-card:nth-child(even){direction:ltr}
-  .post-photo{min-height:260px}
+/* ── VIEW TOGGLE ── */
+.view-toggle{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;display:flex;gap:3px;background:var(--dark);border-radius:2rem;padding:4px;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.view-btn{font-family:var(--sans);font-size:11px;letter-spacing:.08em;padding:6px 14px;border:none;border-radius:2rem;cursor:pointer;transition:all .3s;color:rgba(255,255,255,.45);background:transparent;font-weight:500;display:flex;align-items:center;gap:5px}
+.view-btn.active{background:var(--gold);color:var(--dark)}
 
-  .hero{grid-template-columns:1fr}
-  .hero-right{min-height:45vh}
-  .hero-left{padding:6rem 2rem 3rem}
-  .about-grid{grid-template-columns:1fr;gap:2.5rem}
-  .about-portrait{aspect-ratio:4/3.2}
-  .services-grid{grid-template-columns:1fr}
-  .gallery-intro-grid{grid-template-columns:1fr;gap:1rem}
-  .gallery-grid{grid-template-columns:1fr 1fr}
-  .g-item:nth-child(1),.g-item:nth-child(6){grid-column:span 2}
-  .reviews-grid{grid-template-columns:1fr}
-  .contact-grid{grid-template-columns:1fr;gap:3rem}
+/* ── MOBILE VIEW (class added to body) ── */
+body.mobile-view .hero-left{width:100% !important;background:linear-gradient(to bottom,rgba(16,12,9,.95) 0%,rgba(16,12,9,.85) 60%,rgba(16,12,9,.4) 100%) !important;padding:5.5rem 1.5rem 2.5rem !important;min-height:100vh;justify-content:flex-end}
+body.mobile-view h1.hero-name{font-size:3rem !important}
+body.mobile-view .hero-tagline{max-width:100% !important;font-size:.95rem !important}
+body.mobile-view .hero-cta{flex-direction:column}
+body.mobile-view .btn-primary{width:100%;justify-content:center;padding:1rem}
+body.mobile-view nav .nav-links{display:none}
+body.mobile-view nav{padding:.85rem 1.25rem}
+body.mobile-view .mobile-nav-btn{display:flex !important}
+
+/* About */
+body.mobile-view .about-grid{grid-template-columns:1fr !important;gap:2rem}
+body.mobile-view .about-portrait{aspect-ratio:4/3 !important;max-height:none}
+body.mobile-view .about-stats{grid-template-columns:1fr 1fr}
+body.mobile-view .about-text p{font-size:.95rem}
+
+/* Services */
+body.mobile-view .services-grid{grid-template-columns:1fr !important}
+body.mobile-view .service-card{padding:1.75rem}
+
+/* Posts */
+body.mobile-view .post-card{grid-template-columns:1fr !important}
+body.mobile-view .post-card:nth-child(even){direction:ltr !important}
+body.mobile-view .post-photo{min-height:280px}
+body.mobile-view .post-content{padding:1.5rem}
+body.mobile-view .post-comments{max-height:none}
+
+/* Contact */
+body.mobile-view .contact-grid{grid-template-columns:1fr !important;gap:2rem}
+
+/* General */
+body.mobile-view section{padding:3.5rem 0}
+body.mobile-view .container{padding:0 1.25rem}
+body.mobile-view .gallery-intro-grid{grid-template-columns:1fr;gap:1rem}
+body.mobile-view .gallery-grid{grid-template-columns:1fr 1fr}
+body.mobile-view .g-item:nth-child(1),.mobile-view .g-item:nth-child(6){grid-column:span 2}
+body.mobile-view .reviews-grid{grid-template-columns:1fr !important}
+body.mobile-view .section-title{font-size:clamp(1.7rem,5vw,2.4rem)}
+body.mobile-view .lang-toggle{top:.85rem;right:.85rem}
+body.mobile-view .view-toggle{bottom:1rem;right:1rem}
+body.mobile-view footer{padding:2rem 1.25rem}
+
+/* Mobile hamburger nav */
+.mobile-nav-btn{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--cream);flex-direction:column;gap:5px}
+.mobile-nav-btn span{width:22px;height:2px;background:currentColor;border-radius:1px;transition:.3s;display:block}
+.mobile-menu{display:none;position:fixed;inset:0;background:rgba(16,12,9,.97);z-index:150;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:var(--serif);font-size:2rem;color:var(--cream);text-decoration:none;transition:.2s}
+.mobile-menu a:hover{color:var(--gold)}
+.mobile-menu .close-btn{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:rgba(255,255,255,.5);font-size:2rem;cursor:pointer;line-height:1}
+
+/* ── RESPONSIVE NATIVO (sin toggle) ── */
+@media(max-width:920px){
   nav .nav-links{display:none}
+  .mobile-nav-btn{display:flex !important}
 }
 @media(max-width:580px){
-  section{padding:3.5rem 0}
-  .container{padding:0 1.4rem}
-  h1.hero-name{font-size:2.8rem}
   .about-stats{grid-template-columns:1fr 1fr}
-  .gallery-grid{grid-template-columns:1fr}
-  .g-item:nth-child(1),.g-item:nth-child(6){grid-column:span 1}
 }
 </style>
 </head>
@@ -246,6 +282,15 @@ footer p+p{margin-top:.3rem}
 </div>
 
 <!-- NAV -->
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="close-btn" onclick="closeMobileMenu()" aria-label="Close menu">×</button>
+  <a href="#about"    onclick="closeMobileMenu()"><span class="en">About</span><span class="es">Sobre mí</span></a>
+  <a href="#services" onclick="closeMobileMenu()"><span class="en">Services</span><span class="es">Servicios</span></a>
+  <a href="#gallery"  onclick="closeMobileMenu()"><span class="en">Gallery</span><span class="es">Galería</span></a>
+  <a href="#contact"  onclick="closeMobileMenu()"><span class="en">Book a session</span><span class="es">Reservar cita</span></a>
+</div>
+
 <nav id="main-nav">
   <a href="#" class="nav-logo">Barber PRO PET</a>
   <ul class="nav-links">
@@ -254,6 +299,9 @@ footer p+p{margin-top:.3rem}
     <li><a href="#gallery"><span class="en">Gallery</span><span class="es">Galería</span></a></li>
     <li><a href="#contact"><span class="en">Book</span><span class="es">Reservar</span></a></li>
   </ul>
+  <button class="mobile-nav-btn" onclick="openMobileMenu()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -955,6 +1003,18 @@ footer p+p{margin-top:.3rem}
   </div>
 </section>
 
+<!-- VIEW TOGGLE BUTTON -->
+<div class="view-toggle" role="group" aria-label="View mode">
+  <button class="view-btn active" id="btn-desktop" onclick="setView('desktop')" aria-pressed="true">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    Desktop
+  </button>
+  <button class="view-btn" id="btn-mobile" onclick="setView('mobile')" aria-pressed="false">
+    <svg width="11" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
+    Mobile
+  </button>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Barber PRO PET</div>
@@ -966,10 +1026,50 @@ footer p+p{margin-top:.3rem}
 </footer>
 
 <script>
+function setView(v) {
+  const body = document.body;
+  const btnD = document.getElementById('btn-desktop');
+  const btnM = document.getElementById('btn-mobile');
+  if (v === 'mobile') {
+    body.classList.add('mobile-view');
+    btnM.classList.add('active'); btnD.classList.remove('active');
+    btnM.setAttribute('aria-pressed','true'); btnD.setAttribute('aria-pressed','false');
+    // Simular viewport estrecho para que todo se compacte
+    document.querySelector('meta[name="viewport"]').content =
+      'width=390, initial-scale=1.0';
+  } else {
+    body.classList.remove('mobile-view');
+    btnD.classList.add('active'); btnM.classList.remove('active');
+    btnD.setAttribute('aria-pressed','true'); btnM.setAttribute('aria-pressed','false');
+    document.querySelector('meta[name="viewport"]').content =
+      'width=device-width, initial-scale=1.0';
+  }
+}
+
+function openMobileMenu() {
+  document.getElementById('mobile-menu').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Auto-detect mobile on load
+if (window.innerWidth <= 768) {
+  setView('mobile');
+  document.getElementById('btn-mobile').classList.add('active');
+  document.getElementById('btn-desktop').classList.remove('active');
+}
+
 function setLang(l){
-  document.body.className='show-'+l;
+  // Preserve mobile-view class when switching language
+  const isMobile = document.body.classList.contains('mobile-view');
+  document.body.className='show-'+l+(isMobile?' mobile-view':'');
   document.getElementById('btn-en').classList.toggle('active',l==='en');
   document.getElementById('btn-es').classList.toggle('active',l==='es');
+  if(isMobile) document.body.classList.add('mobile-view');
 }
 
 window.addEventListener('scroll',()=>{
